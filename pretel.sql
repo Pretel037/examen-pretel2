@@ -29,6 +29,7 @@ CREATE TABLE Producto (
     Acabado VARCHAR(255)
 );
 
+
 INSERT INTO Producto (Nombre_producto, Descripcion, Tamaño_producto, Tipo_papel, Impresion, Acabado)
 VALUES 
 ('Papel Fotográfico', 'Es un papel para imprimir fotos', 27.5, 'Fotografico', 'A4', 'Fino'),
