@@ -1,9 +1,8 @@
 CREATE SCHEMA IF NOT EXISTS EXAMEN_PRETEL;
 USE EXAMEN_PRETEL;
 
-DROP TABLE IF EXISTS Cliente;
 CREATE TABLE Cliente (
-    DNI INT, 
+    DNI INT PRIMARY KEY,
     localidad VARCHAR(255), 
     Direccion_cl VARCHAR(255), 
     Tipo_cliente VARCHAR(255), 
@@ -17,10 +16,10 @@ INSERT INTO Cliente (DNI, localidad, Direccion_cl, Tipo_cliente, Email, Nombre_c
 VALUES
 (72382134, 'Chimbote', 'Av. Brasil', 'Frecuente', 'patri@hotmail.com', 'Patricio', 'Solorzano Quispe', '964562345'),
 (83721853, 'Nuevo Chimbote', 'Av. Argentina', 'Frecuente', 'Carlo5@hotmail.com', 'Carlos', 'Conqui Mamani', '962345764'),
-(72382134, 'Chimbote', 'Av. America', 'Frecuente', 'Antonio20@hotmail.com', 'Antonio', 'García Lu', '941245424');
+(12345678, 'Chimbote', 'Av. America', 'Frecuente', 'Antonio20@hotmail.com', 'Antonio', 'García Lu', '941245424'); -- Cambié el DNI para evitar duplicados
 
-DROP TABLE IF EXISTS Producto;
 CREATE TABLE Producto (
+    Codigo_producto INT PRIMARY KEY AUTO_INCREMENT,
     Nombre_producto VARCHAR(255),
     Descripcion VARCHAR(255),
     Tamaño_producto DECIMAL(5, 2),
@@ -29,16 +28,14 @@ CREATE TABLE Producto (
     Acabado VARCHAR(255)
 );
 
-
 INSERT INTO Producto (Nombre_producto, Descripcion, Tamaño_producto, Tipo_papel, Impresion, Acabado)
 VALUES 
 ('Papel Fotográfico', 'Es un papel para imprimir fotos', 27.5, 'Fotografico', 'A4', 'Fino'),
 ('Papel Folcote', 'Es un papel rigido tipo carton', 30, 'Folcote', 'A3', 'Grueso'),
 ('Papel Bond', 'Es un papel en blanco', 27.5, 'Bond', 'A4', 'Fino');
 
-DROP TABLE IF EXISTS Departamento;
 CREATE TABLE Departamento (
-    Nombre_departamento VARCHAR(255), 
+    Nombre_departamento VARCHAR(255) PRIMARY KEY,
     Email VARCHAR(255)
 );
 
@@ -50,7 +47,7 @@ VALUES
 
 DROP TABLE IF EXISTS Empleado;
 CREATE TABLE Empleado (
-    DNI INT, 
+    DNI INT PRIMARY KEY, 
     nombre VARCHAR(255), 
     apellidos VARCHAR(255), 
     email VARCHAR(255), 
@@ -67,22 +64,19 @@ VALUES
 (65962367, 'Mateo', 'Vera Lopez', 'Mati@gmail.com', '957859431', 'Av. Panchos', 60.5, 'Lima'),
 (71238582, 'Ana', 'Vega Honores', 'Ana2020@gmail.com', '973891550', 'Av. Lituania', 90.5, 'Ancash');
 
-DROP TABLE IF EXISTS Factura;
 CREATE TABLE Factura (
-    Nfactura INT,
-    Nombre_cliente VARCHAR(255),
-    Nombre_producto VARCHAR(255), 
+    Nfactura INT PRIMARY KEY,
+    DNI_cliente INT,
+    Codigo_producto INT, 
     pago DECIMAL(5, 2), 
     importe DECIMAL(5, 2), 
     envio VARCHAR(255),
-    FOREIGN KEY (Nombre_cliente) REFERENCES Cliente(Nombre_cliente),
-    FOREIGN KEY (Nombre_producto) REFERENCES Producto(Nombre_producto)
+    FOREIGN KEY (DNI_cliente) REFERENCES Cliente(DNI),
+    FOREIGN KEY (Codigo_producto) REFERENCES Producto(Codigo_producto)
 );
 
-INSERT INTO Factura (Nfactura, Nombre_cliente, Nombre_producto, pago, importe, envio)
+INSERT INTO Factura (Nfactura, DNI_cliente, Codigo_producto, pago, importe, envio)
 VALUES
-(1, 'Carlos', 'Papel Fotográfico', 40.90, 40.90, 'Recojo en tienda'),
-(2, 'Antonio', 'Papel Folcote', 14.00, 13.99, 'Recojo en tienda'),
-(3, 'Patricio', 'Papel Bond', 10.00, 8.00, 'Recojo en tienda');
-
-COMMIT;
+(1, 83721853, 1, 40.90, 40.90, 'Recojo en tienda'),
+(2, 12345678, 2, 14.00, 13.99, 'Recojo en tienda'),
+(3, 72382134, 3, 10.00, 8.00, 'Recojo en tienda');
